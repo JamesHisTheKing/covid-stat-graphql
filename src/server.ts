@@ -1,24 +1,21 @@
-import { ApolloServer } from 'apollo-server'
-import LmaoAPI from './services/lmao'
-// import resolvers from './resolvers'
-// import schemas from './schemas'
 import { loadFilesSync } from '@graphql-tools/load-files'
-import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge'
+import { ApolloServer } from 'apollo-server'
 import path from 'path'
+import resolvers from './resolvers'
+import LmaoAPI from './services/lmao'
 
 const port = 3001
 
-const schemas = loadFilesSync(path.join(__dirname, '/schemas'))
-const resolvers = loadFilesSync(path.join(__dirname, '/resolvers'))
+const schemas = loadFilesSync(path.join(__dirname, '/schemas'));
+
+const dataSources = {
+  lmao: new LmaoAPI(), // create instance once
+}
 
 const server = new ApolloServer({
   typeDefs: schemas,
-  resolvers,
-  dataSources: () => {
-    return {
-      lmao: new LmaoAPI(),
-    }
-  },
+  resolvers: resolvers,
+  dataSources: () => dataSources,
 })
 
 server.listen(port, () => {

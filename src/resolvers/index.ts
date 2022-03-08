@@ -1,6 +1,6 @@
-import countryResolver from './country'
 import * as _ from 'lodash'
+import countryResolvers from './country'
 
-const resolvers = _.merge({}, countryResolver)
+const resolvers = _.merge({}, countryResolvers)
 
 export default resolvers

@@ -1,9 +1,9 @@
-import { Country } from '../types'
 import { RESTDataSource } from 'apollo-datasource-rest'
+import { Country } from '../../generated/graphql'
 export default class Lmao extends RESTDataSource {
-  constructor() {
+  constructor(baseUrl = 'https://corona.lmao.ninja/v2') {
     super()
-    this.baseURL = 'https://corona.lmao.ninja/v2'
+    this.baseURL = baseUrl
   }
 
   async getCountries(): Promise<Country[]> {

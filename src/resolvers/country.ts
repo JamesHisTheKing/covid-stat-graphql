@@ -1,18 +1,18 @@
 import { UserInputError } from 'apollo-server'
-import { Country } from '../types'
+import { Country, Resolvers, ResolversParentTypes } from '../../generated/graphql'
 
-const countryResolver = {
+const resolvers: Resolvers = {
   Query: {
-    countries: async function countries(
-      _: void,
-      __: void,
+    countries: async function (
+      _: ResolversParentTypes['Query'],
+      __: {},
       { dataSources }: any
     ): Promise<Country[]> {
       return dataSources.lmao.getCountries()
     },
 
-    country: function country(
-      _: void,
+    country: async function (
+      _: ResolversParentTypes['Query'],
       { name }: { name: string },
       { dataSources }: any
     ): Promise<Country> {
@@ -24,4 +24,4 @@ const countryResolver = {
   },
 }
 
-export default countryResolver
+export default resolvers
